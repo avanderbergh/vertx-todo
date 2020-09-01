@@ -1,31 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-class Greeter extends React.Component { // <1>
+import TodoList from "./components/TodoList";
 
+class Greeter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { // <2>
-      message: "Default message"
-    }
+    this.state = {
+      message: "Default message",
+    };
   }
 
-  componentDidMount() { // <5>
+  componentDidMount() {
     fetch("/api/message")
-      .then(response => response.text())
-      .then(text => this.setState({message: text}));
+      .then((response) => response.text())
+      .then((text) => this.setState({ message: text }));
   }
 
-  render() { // <3>
+  render() {
+    let style = {
+      color: "red",
+    };
     return (
-      <div>
+      <div style={style}>
         <span>{this.state.message}</span>
+        <TodoList />
       </div>
     );
   }
 }
 
-ReactDOM.render( // <4>
-  <Greeter/>,
-  document.getElementById('root')
-);
+ReactDOM.render(<Greeter />, document.getElementById("root"));
