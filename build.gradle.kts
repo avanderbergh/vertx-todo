@@ -4,7 +4,7 @@ import com.moowork.gradle.node.npm.NpmTask
 plugins {
   java
   application
-  id("com.moowork.node") version "1.3.1"
+  id("com.github.node-gradle.node") version "2.2.4"
 }
 // end::gradle-npm-plugin[]
 
@@ -16,6 +16,7 @@ repositories {
 dependencies {
   val vertxVersion = "3.7.0"
   implementation("io.vertx:vertx-web:${vertxVersion}")
+  compile("io.vertx:vertx-mongo-client:${vertxVersion}")
 }
 // end::dependencies[]
 
