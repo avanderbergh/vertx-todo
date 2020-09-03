@@ -22,7 +22,7 @@ dependencies {
 
 // tag::application-main[]
 application {
-  mainClassName = "io.vertx.howtos.react.BackendVerticle"
+  mainClassName = "codes.adriaan.todo.BackendVerticle"
 }
 // end::application-main[]
 
