@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
-import TodoList from "./components/TodoList";
+import { createStore } from "redux";
+import { TaskReducer } from "./store/reducers";
 
-const App: React.FC = () => {
-  const [message, setMessage] = useState("Default Title");
-  useEffect(() => {
-    fetch("/api/message")
-      .then((response) => response.text())
-      .then((text) => setMessage(text));
-  });
-  return <TodoList title={message} />;
-};
+import TodoListContainer from "./containers/TodoListContainer";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const store = createStore(TaskReducer);
+
+const App: React.FC = () => <TodoListContainer title="My Tasks" />;
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);

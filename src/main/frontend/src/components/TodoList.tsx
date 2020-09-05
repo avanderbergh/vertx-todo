@@ -1,41 +1,46 @@
 import React, { useState } from "react";
+import { addTask } from "../store/actions";
+import { Task } from "../store/types";
 
-class TodoItem {
-  title = "";
-  completed = false;
+class TodoItem implements Task {
+  title: string;
+  completed: boolean;
 
   constructor(title: string) {
     this.title = title;
+    this.completed = false;
   }
 }
 
 interface Props {
   title: string;
+  tasks: Task[];
+  addTask(newTask: Task): void;
 }
 
-const TodoList: React.FC<Props> = ({ title }) => {
+const TodoList: React.FC<Props> = (props) => {
   const [todoTitle, setTodoTitle] = React.useState<string>("New Todo");
-  const [todoList, setTodoList] = React.useState<TodoItem[]>([]);
 
-  const handleSubmit = () => {
-    setTodoList([...todoList, new TodoItem(todoTitle)]);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    props.addTask({ title: todoTitle, completed: false });
     setTodoTitle("");
   };
 
-  const handleInputChanged = (event: { target: { value: string } }) =>
-    setTodoTitle(event.target.value);
+  const handleInputChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTodoTitle(e.target.value);
 
   return (
-    <>
-      <h1>{title}</h1>
+    <form onSubmit={handleSubmit}>
+      <h1>{props.title}</h1>
       <input type="text" onChange={handleInputChanged} value={todoTitle} />
-      <button onClick={handleSubmit}>Add</button>
+      <button type="submit">Add</button>
       <ul>
-        {todoList.map((todoItem) => (
-          <li>{todoItem.title}</li>
+        {props.tasks.map((task) => (
+          <li>{task.title}</li>
         ))}
       </ul>
-    </>
+    </form>
   );
 };
 
