@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { addTask } from "../store/actions";
 import { Task } from "../store/types";
 
@@ -16,9 +16,13 @@ interface Props {
   title: string;
   tasks: Task[];
   addTask(newTask: Task): void;
+  loadTasks(): void;
 }
 
 const TodoList: React.FC<Props> = (props) => {
+  useEffect(() => {
+    props.loadTasks();
+  }, []);
   const [todoTitle, setTodoTitle] = React.useState<string>("New Todo");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
